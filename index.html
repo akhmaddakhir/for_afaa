@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Letter for You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+  <div class="bg-glow glow-boom" id="glowBoom"></div>
+  <canvas id="particlesCanvas"></canvas>
+  <canvas id="confettiCanvas"></canvas>
+
+  <main>
+    <section class="loader active" id="loader">
+      <p id="loaderText">loading...</p>
+    </section>
+
+    <section class="scene hidden" id="sceneWelcome">
+      <div class="welcome-layout">
+        <div class="welcome-copy">
+          <p class="eyebrow">A small letter</p>
+          <h1>Hi, <span id="herName">Afaa</span>.</h1>
+          <p class="subtitle">Semoga kamu mau buka ini sampai habis.</p>
+          <button class="text-button" id="openEnvelopeHint" type="button">
+            Klik amplopnya<span>→</span>
+          </button>
+        </div>
+
+        <button class="envelope-button float" id="envelopeButton" type="button" aria-label="Buka surat">
+          <span class="orbit orbit-one">✦</span>
+          <span class="orbit orbit-two">♡</span>
+          <span class="orbit orbit-three">✧</span>
+
+          <svg class="envelope-svg" viewBox="0 0 360 280" role="img" aria-label="Amplop dengan segel hati">
+            <defs>
+              <linearGradient id="paperGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#fff2d5" />
+                <stop offset="1" stop-color="#f1d49f" />
+              </linearGradient>
+              <linearGradient id="envGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#332414" />
+                <stop offset="1" stop-color="#19110b" />
+              </linearGradient>
+              <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4a3218" />
+                <stop offset="1" stop-color="#25170b" />
+              </linearGradient>
+              <linearGradient id="heartGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffb067" />
+                <stop offset="1" stop-color="#ff6b1a" />
+              </linearGradient>
+            </defs>
+
+            <ellipse class="env-shadow" cx="180" cy="258" rx="116" ry="12" />
+            <rect class="letter-peek" x="72" y="58" width="216" height="124" rx="16" fill="url(#paperGrad)" />
+            <path class="paper-line" d="M102 93H258M102 119H238M102 145H260" />
+            <path class="flap-back" d="M34 92 L180 178 L326 92 Z" />
+            <rect class="env-body" x="34" y="92" width="292" height="150" rx="18" />
+            <path class="env-left" d="M34 106 L180 184 L34 242 Z" />
+            <path class="env-right" d="M326 106 L180 184 L326 242 Z" />
+            <path class="env-bottom" d="M34 242 L180 156 L326 242 Z" />
+            <path class="flap-front" d="M34 92 L180 178 L326 92 Z" />
+            <g class="seal">
+              <circle cx="180" cy="145" r="25" />
+              <path d="M180 157 C180 157 164 146 164 137 C164 130 171 126 180 134 C189 126 196 130 196 137 C196 146 180 157 180 157Z" />
+            </g>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene hidden" id="sceneLetter">
+      <article class="letter-card">
+        <p class="letter-label">Surat buat kamu</p>
+        <div class="letter-body" id="letterBody"></div>
+        <button class="primary-button hidden-button" id="nextToCards" type="button">Lanjut baca →</button>
+      </article>
+    </section>
+
+    <section class="scene hidden" id="sceneCards">
+      <div class="cards-content">
+        <p class="eyebrow">One more thing</p>
+        <h2>Aku cuma mau jujur.</h2>
+        <div class="cards-grid">
+          <article class="info-card"><span>01</span><p>Aku akhir-akhir ini bikin kamu bingung.</p></article>
+          <article class="info-card"><span>02</span><p>Aku sering bales lama sama kelihatan cuek.</p></article>
+          <article class="info-card"><span>03</span><p>Tapi serius, bukan karena aku ngga peduli sama kamu.</p></article>
+          <article class="info-card"><span>04</span><p>Aku salah karena bikin kamu bingung.</p></article>
+        </div>
+        <button class="primary-button hidden-button" id="nextToFinal" type="button">Terakhir →</button>
+      </div>
+    </section>
+
+    <section class="scene hidden" id="sceneFinal">
+      <div class="final-content">
+        <p class="eyebrow">Last part</p>
+        <h2>Kalau kamu masih mau maafin aku...</h2>
+        <button class="heart-button" id="heartButton" type="button" aria-label="Klik hati">
+          <svg viewBox="0 0 160 145" width="160" aria-hidden="true">
+            <defs>
+              <linearGradient id="bigHeartGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffb067" />
+                <stop offset="1" stop-color="#ff6b1a" />
+              </linearGradient>
+            </defs>
+            <path d="M80 130 C80 130 10 85 10 42 C10 18 28 5 50 10 C62 13 72 22 80 35 C88 22 98 13 110 10 C132 5 150 18 150 42 C150 85 80 130 80 130Z" fill="url(#bigHeartGrad)" />
+            <ellipse cx="57" cy="38" rx="15" ry="9" fill="rgba(255,255,255,.22)" transform="rotate(-30 57 38)" />
+          </svg>
+          <span>Klik hati dulu</span>
+        </button>
+
+        <div class="forgive-panel" id="forgivePanel" aria-live="polite">
+          <p>Udah maafin aku pa belum?</p>
+          <div class="forgive-buttons" id="forgiveButtons">
+            <button class="forgive-btn yes-btn" id="yesButton" type="button">Udah 💛</button>
+            <button class="forgive-btn no-btn" id="noButton" type="button">Belum 😒</button>
+          </div>
+        </div>
+
+        <p class="final-text" id="finalText">YEY!! Makasih udah mau maafin aku. Aku janji bakal janji lagi</p>
+        <p class="final-text soft-answer" id="softAnswer">Gapapa kok. Makasih udah baca semuanya</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
